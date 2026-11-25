@@ -12,4 +12,11 @@ public class LojaService {
     public ArrayList<Produto> listarProdutos() throws SQLException {
         return lojaRepository.listarProdutos();
     }
+
+    public Produto buscarProdutoPorId(int id) throws SQLException {
+        if (id <= 0)
+            throw new IllegalArgumentException("Id inválido.");
+
+        return lojaRepository.buscarProdutoPorId(id);
+    }
 }
