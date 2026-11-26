@@ -24,13 +24,17 @@ public class Main {
 //            System.out.println("Produto não encontrado.");
 //        }
 
-        int linhas = lojaService.adicionarProduto("Par de meias", BigDecimal.valueOf(20), 5, null);
+//        int linhas = lojaService.adicionarProduto("Par de meias", BigDecimal.valueOf(20), 5, null);
+//
+//        if (linhas != 0){
+//            System.out.println("Produto adicionado.");
+//        } else {
+//            System.out.println("Produto não encontrado.");
+//        }
 
-        if (linhas != 0){
-            System.out.println("Produto adicionado.");
-        } else {
-            System.out.println("Produto não encontrado.");
-        }
-
+        System.out.println(lojaService.atualizarProduto(20, "Garrafa Térmica"));
+        System.out.println(lojaService.atualizarProduto(20, BigDecimal.valueOf(48.49)));
+        System.out.println(lojaService.atualizarProduto(20, 45));
+        System.out.println(lojaService.atualizarCategoriaIdProduto(20, (Integer) null));
     }
 }

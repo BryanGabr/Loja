@@ -108,4 +108,94 @@ public class LojaRepository {
 
         }
     }
+
+    public int atualizarProduto(int id, String nome) throws SQLException {
+        String sql = "UPDATE PRODUTO SET NOME = ? WHERE ID = ?";
+
+        int linhas = 0;
+
+        try (Connection conn = conexao(); PreparedStatement ps = conn.prepareStatement(sql)){
+            conn.setAutoCommit(false);
+            try {
+                ps.setInt(2, id);
+                ps.setString(1, nome);
+
+                linhas = ps.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+            }
+        }
+        return linhas;
+    }
+
+    public int atualizarProduto(int id, BigDecimal preco) throws SQLException {
+        String sql = "UPDATE PRODUTO SET PRECO = ? WHERE ID = ?";
+
+        int linhas = 0;
+
+        try (Connection conn = conexao(); PreparedStatement ps = conn.prepareStatement(sql)){
+            conn.setAutoCommit(false);
+            try {
+                ps.setInt(2, id);
+                ps.setBigDecimal(1, preco);
+
+                linhas = ps.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+            }
+        }
+        return linhas;
+    }
+
+    public int atualizarProduto(int id, int estoque) throws SQLException {
+        String sql = "UPDATE PRODUTO SET ESTOQUE = ? WHERE ID = ?";
+
+        int linhas = 0;
+
+        try (Connection conn = conexao(); PreparedStatement ps = conn.prepareStatement(sql)){
+            conn.setAutoCommit(false);
+            try {
+                ps.setInt(2, id);
+                ps.setInt(1, estoque);
+
+                linhas = ps.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+            }
+        }
+        return linhas;
+    }
+
+    public int atualizarCategoriaIdProduto(int id, Integer categoriaId) throws SQLException {
+        String sql = "UPDATE PRODUTO SET CATEGORIA_ID = ? WHERE ID = ?";
+
+        int linhas = 0;
+
+        try (Connection conn = conexao(); PreparedStatement ps = conn.prepareStatement(sql)){
+            conn.setAutoCommit(false);
+            try {
+                ps.setInt(2, id);
+
+                if (categoriaId != null) {
+                    ps.setInt(1, categoriaId);
+                } else {
+                    ps.setNull(1, Types.INTEGER);
+                }
+
+                linhas = ps.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
+        }
+        return linhas;
+    }
 }
