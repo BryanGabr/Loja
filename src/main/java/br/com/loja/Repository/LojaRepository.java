@@ -5,10 +5,7 @@ import br.com.loja.Model.Categoria;
 import br.com.loja.Model.Produto;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class LojaRepository {
@@ -18,6 +15,25 @@ public class LojaRepository {
     private Connection conexao() throws SQLException {
         return connectionFactory.conectar();
     }
+
+    public int adicionarProduto (String nome, BigDecimal preco, int estoque, Integer categoriaId) throws SQLException {
+        String sql = "INSERT INTO PRODUTO VALUES (NULL, ?, ?, ?, ?)";
+
+        try (Connection conn = conexao(); PreparedStatement ps = conn.prepareStatement(sql)){
+
+            ps.setString(1, nome);
+            ps.setBigDecimal(2, preco);
+            ps.setInt(3, estoque);
+            if (categoriaId != null){
+                ps.setInt(4, categoriaId);
+            } else {
+                ps.setNull(4, Types.INTEGER);
+            }
+
+            return ps.executeUpdate();
+        }
+    }
+
 
     public ArrayList<Produto> listarProdutos() throws SQLException {
         ArrayList<Produto> produtoArrayList = new ArrayList<>();
@@ -79,6 +95,17 @@ public class LojaRepository {
                     return new Produto(produtoId, nome, preco, estoque, null);
                 }
             }
+        }
+    }
+
+    public int removerProdutoPorId(int id) throws SQLException {
+        String sql = "DELETE FROM PRODUTO WHERE ID = ?";
+
+        try (Connection conn = conexao(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, id);
+
+            return ps.executeUpdate();
+
         }
     }
 }
