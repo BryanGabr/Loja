@@ -33,6 +33,10 @@ public class LojaService {
         return lojaRepository.listarProdutos();
     }
 
+    public ArrayList<Produto> listarProdutosComCategoria() throws SQLException {
+        return lojaRepository.listarProdutosComCategoria();
+    }
+
     public Produto buscarProdutoPorId(int id) throws SQLException {
         if (id <= 0)
             throw new IllegalArgumentException("Id inválido.");
@@ -40,11 +44,11 @@ public class LojaService {
         return lojaRepository.buscarProdutoPorId(id);
     }
 
-    public int removerProdutoPorId(int id) throws SQLException {
+    public int excluirProdutoPorId(int id) throws SQLException {
         if (id <= 0)
             throw new IllegalArgumentException("Id inválido.");
 
-        return lojaRepository.removerProdutoPorId(id);
+        return lojaRepository.excluirProdutoPorId(id);
     }
 
     public int atualizarProduto(int id, String nome) throws SQLException {
